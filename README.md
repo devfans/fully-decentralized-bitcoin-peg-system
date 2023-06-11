@@ -52,7 +52,19 @@ It's hard for the 2 way peg system to achieve full decentralization and safe eno
 
 <figure><img src="https://lh5.googleusercontent.com/lg0zITunH2I9SV1VEcIFHNWe1lqGzuqcwK338lm0Z8e4Sch67jwaCjlddKBj_XeB1OLdoJsgOcvFegT1XE830BvOiSNiQFYnYx6wI5n0mQDUNIq1s7vdfB2CloOR3M8rSjxdgxvTQRxz0Ni-DiiBnwU" alt=""><figcaption><p>Decentralized Peg System Design</p></figcaption></figure>
 
-*
+In this proposal, there's a bridge smart contract pre-deployed on layer 2 chains. This smart contract define the stake/collateral logic. So anyone call stake layer 2 tokens into this contract to apply to be a peg operator. This process is fully permissionless, so needs no one's permission to achieve that. A collateral ratio F is defined to ensure the value of collateral is higher enough than the value of the locked Bitcoin a operator can hold. Another ration LF to indicate a liquidation threshold, so when the collateral ration goes below this ratio, a liquidation will be initialized by the bridge contract, which will open an order in the contract that any user can burn same amount of peg-BTC as the operator hold to gain the full collateral. The liquidation happens too if the operator is maliciously move the fund he hold in the peg wallet on the Bitcoin chain. With such a mechanism there's hedging between selling the layer 2 tokens(the collateral) for BTC and burning Peg-BTC for layer 2 tokens, while the whole process is fully open and decentralized.&#x20;
+
+Mechanism in details:
+
+* Anyone can apply to be a Peg operator by staking layer 2 token into bridge stake contract. This process does not need any permission as long as it's  a valid operation.
+* Operator staked layer 2 token of value X, have an allowed peg amount of BTC of value X \* F (F \~= 70%?, F is the ratio between collateral  and the Bitcoin held).
+* Operator should keep an eye on the status of collateral to ensure the value is always enough so that the ratio wont goes below LF(LF \~= 85%? LF is the ratio where a liquidation will be initialized).&#x20;
+* When a user wants to peg in some BTC, he can find the best operator by calling the bridge contract, then send the BTC into the operator’s BTC public key shown by the contract.
+* When a layer 2 block producer derive the Bitcoin block which includes the peg-in request into a layer 2 block, it parses this transaction and  interpret it to be a peg-in transaction and mint the same amount of peg-BTC on layer 2 chain to the peg receiver..
+* When a user wants to peg out BTC, it should choose an operator and burn the peg-BTC, the chosen operator should process this peg-out request within N following Bitcoin blocks.&#x20;
+* When an operator makes invalid BTC transfer, or doesn't process the Peg out requests in time. The staked layer 2 token will be distributed into users proportionally who requested to peg out.
+* An operator could apply to exit, by sending a cease request into the stake contract. A cease status indicates the operator will not be able to process peg out in L days or Blocks. Users should not begin any peg request with this operator anymore. (L is the delay before a operator becomes in Ceased status).
+* Operators in Ceased status, after L days/blocks, will be available to exit if his Bitcoin pub key holds no more Bitcoin, or he must transfer the balance into another operator who requested to take over by calling the stake contract and staked enough amount of L2 tokens.
 
 
 
