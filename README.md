@@ -21,7 +21,7 @@ Why building such a valid 2 way peg system is challenging on Bitcoin? The Bitcoi
 sBTC designed by the "sBTC Working Group" combines the consensus of its layer 2 chain with its peg system through a stacker role. Layer 2 chain miners need to bids on the block producer role by transferring BTC to the stackers. Stackers are a group of signers who stake their layer 2 token (STX) to operate the peg system, and the value of the locked layer 2 tokens should be higher than they can potentially steal from the peg wallet. In this design, the threshold level of the peg wallet and the value of locked layer 2 tokens provides the safety of the systems(Note: Penalties with the locked layer 2 token are not mentioned in the white-paper indeed). Additionally, the economic incentive compatibility provides the liveness. Some good properties it has indeed.
 
 * Anyone can elect to be a stacker by following the protocol and staking their layer 2 tokens.
-* Compromising the peg wallet needs a threshold level. Normally it's hard to achieve this if it's designed as not incentivized.
+* Compromising the peg wallet needs the consensus of the group to reach a threshold level. Normally it's hard to achieve this if it's designed as not incentivized.
 * Economic incentive gives the peg system operator rationale to behave honestly.
 * The pegging requests are broadcasted on the base chain, to gain the censorship resistance from the Bitcoin chain.
 * Recovery mode to keep the liveness when the threshold level is not met.
