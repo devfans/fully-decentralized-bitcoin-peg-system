@@ -94,3 +94,19 @@ Both my proposal and the sBTC design involve the lock of layer 2 token, however,
 
 
 This proposal is still in draft status. Reviews are desired.
+
+
+
+Thanks to [@Igor](https://twitter.com/igorsyl) for the review and feedback.
+
+
+
+Reference Links:
+
+
+
+[https://stx.is/sbtc-pdf](https://stx.is/sbtc-pdf)
+
+[https://dev.rootstock.io/rsk/architecture/powpeg/](https://dev.rootstock.io/rsk/architecture/powpeg/)
+
+[https://dev.rootstock.io/rsk/architecture/security/](https://dev.rootstock.io/rsk/architecture/security/)&#x20;
