@@ -68,6 +68,8 @@ Mechanism in details:
 * An operator could apply to exit, by sending a cease request into the bridge contract. A ceased status indicates the operator will not be able to process any peg in requests in L days or Blocks. Users should not initiate any new peg-in requests with this operator while pegging out is not impacted. (L is the delay before a operator becomes available to exit, it's in ceased status during the delay).
 * Operators in ceased status, after L days/blocks, will be available to exit if his Bitcoin peg wallet holds no remaining Bitcoin. Alternatively, they can transfer the balance to other operators who have staked enough amount of collateral. The transfer transaction should align to the defined wire format by the protocol, and should be broadcasted on the Bitcoin chain.
 * The peg operator should receive enough rewards from either the protocol consensus or the peg users, to cover the cost of running services, also as incentive to operate honestly with collateral.
+* To process liquidation requests efficiently, any user should be allowed to fulfill these requests by interaction calls with the bridge contract and a single liquidation order can either be fulfilled as a whole or partially filled at a time.
+* When the price of layer 2 token against the Bitcoin goes down much faster than the speed of the process of liquidation and the speed of the operators to add more collateral, the worst situation might happen, in which, the liquidation occurs on all the operators. Assuming even we reached such a case, the remaining peg-BTC in layer 2 chains will always hold the value same as all the collateral under liquidation, no matter how far the price of the layer 2 token goes down. When the price of layer 2 token goes up again, the liquidation requests will be fully filled and the system will resume.  However, it's still unacceptable for such a peg to suffer this. An extra insurance should be setup to hold the bottom of these peg-BTC. A funding pool of layer 2 token can be reserved by the governance of the layer 2 chain to achieve this, so that when such an extreme situation happens, liquidation will still be fulfilled as the pool will compensate for the loss of the possible profits of arbitrators. After all the liquidation requests are fulfilled, the new peg-ins can continue and the system will resume even when the price of layer 2 tokens is still lower than before.&#x20;
 
 This roughly outlines such a 2-way peg system for Bitcoin, which has some desired properties like:
 
@@ -83,7 +85,7 @@ This roughly outlines such a 2-way peg system for Bitcoin, which has some desire
 Though there're still some potential flaws or weakness in my proposal.
 
 * The collateral ratio estimation will depends on a price oracle, which introduces an extra security assumption. A fully decentralized price oracle is somehow hard to be implemented, thus a price oracle is hard to be fully trust-worthy.
-* The collateral ratio makes less monetary efficiency. A supply of $100M of peg-BTC will require a collateral of layer 2 token with a value of $142M when we define the ratio F as 70%.
+* The collateral ratio makes less monetary efficiency. A supply of $100M of peg-BTC will require a collateral of layer 2 token with a value of $142M when we define the ratio F as 70%. In addition, an insurance pool is required to handle the extreme odd situations as described.
 
 
 
@@ -103,7 +105,7 @@ Issues and PRs are welcome here: [https://github.com/devfans/fully-decentralized
 
 
 
-Thanks to [@Igor](https://twitter.com/igorsyl) for the first review and feedback.
+Thanks to [@Igor](https://github.com/igorsyl) for the first review and feedback.
 
 
 
